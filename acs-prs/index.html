@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<title>Acs github PRs</title>	
+<script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+
+<!--
+<script src="jquery-1.11.0.min.js"> </script>
+-->
+
+<script>
+
+//var pullsource = 'cs-pulls.json';
+
+var userids = [ 
+"srinivas-gandikota",
+"jayapalu",
+"kishankavala",
+"harikrishna-patnala",
+"sureshanaparti",
+"koushik-das",
+"karuturi",
+"maneesha-p",
+"bvbharatk",
+"kansal",
+
+"sateesh-chodapuneedi",
+"nitin-maharana",
+"priyankparihar",
+"anshul1886",
+"rags22489664",
+"rajesh-battala",
+"likitha",
+
+"SudharmaJain",
+"yvsubhash",
+"sudhansu7",
+
+"rashmidixit",
+"adwaitpatankar",
+"pdumbre",
+
+"nitt10prashant",
+"sanju1010",
+"shwetaag",
+"sarathkouk",
+"pavanb018",
+"pritisarap12",
+"sailajamada",
+
+];    
+        
+var pullsource = 'https://api.github.com/repos/apache/cloudstack/pulls';
+var maxpages = 50;
+
+var scene={};
+var users = {};
+var total_pr_count = 0;
+//var pr_comments = {};
+var pr_extra = { "comments":{}, "reviews":{} };
+var out = "<table>";
+//var container = document.body;
+var container_title = {}; 
+var container = {}; //document.getElementById('content-git');
+var container_debug = {};
+
+
+function loadjson() {
+    var pagenum = 1;
+
+    container_title = document.getElementById('content-title');
+    container = document.getElementById('content-git');
+    container_debug = document.getElementById('content-debug');
+
+    container_title.innerHTML = "Loading";
+    container.innerHTML = "";//"<table border=1> <tr> <td height=500 align=top> please wait </td> </td> </table>";
+    loadUri(pagenum);
+}
+
+function loadUri(pagenum) {
+    container_title.innerHTML += ".."+pagenum;
+    var pullUri = pullsource+"?page="+pagenum;
+    $.getJSON(pullUri, function(data) { 
+        scene=data;
+        parsePulls(scene);
+        if (data.length != 0 && pagenum < maxpages)
+            loadUri(pagenum+1)
+        else
+           render();
+    }); 
+
+  //  window.alert(scene.length);
+//  document.body.innerHTML=scene[3].state;
+}
+
+function allowUser(userid) {
+
+    if (userids.indexOf(userid) != -1) 
+        return true;
+    //return true;
+    return false;
+}
+function parsePulls(pulls) {
+
+    for (i=0; i<pulls.length; i++) {
+
+        if (allowUser(pulls[i].user.login)) {
+            if (!users.hasOwnProperty(pulls[i].user.login))
+                users[pulls[i].user.login] = [];
+            users[pulls[i].user.login].push(getprfields(pulls[i]));
+
+            total_pr_count ++;
+            
+            out += "<p>" + pulls[i].user.login +"## ##"+i;
+        }
+        //users[pulls[i].user.login] = pulls[i].title;
+        //if (pulls[i].state == "open")
+        //out += "<tr><td>" + pulls[i].user.login +"</td><td>" + pulls[i].title +  "</td>";
+        }
+        //out += users.toSource();
+        out += "</table>";
+
+}
+
+function getprfields(pr) {
+     review_url = pr.review_comments_url;
+     //comments = $.getJSON(review_url); 
+    //loadComments(review_url);
+
+    //return { "id":pr.number, "title":pr.title, "comments":"uri" };
+    return { "id":pr.number, "title":pr.title, "reviews":pr.review_comments_url, "comments":pr.comments_url};
+}
+
+var comments_out = "";
+function loadComments(pr_info_type, review_url) {
+    
+    pr_id = review_url.split("/")[7];
+    render_comments(pr_id, pr_info_type);
+
+    //pr_info_type = "comments"
+    pr_comments = pr_extra[pr_info_type];
+
+    if (pr_comments[pr_id] != null)
+        return;
+
+    pr_comments[pr_id] = { "count":0}
+    $.getJSON(review_url, function (pr_id, pr_info_type) {
+               return function(data) { 
+         comments = data;
+         if (comments.length != 0) {
+             //container_debug.innerHTML += comments[0].pull_request_url+"<br>"
+             parseComments(pr_id, pr_info_type, comments);
+        }
+    }
+}(pr_id, pr_info_type)
+
+           );
+
+}
+
+function parseComments(pr_id, pr_info_type, comments) {
+    //pr_id = comments[0].pull_request_url.split("/")[7];
+    //pr_id = comments[0].html_url.split("#")[0].split("/")[6];
+    pr_body = ""
+    //for (var com in comments) {
+    pr_lgtm = " ";
+    pr_commenters = {};
+    for (var i=0; i < comments.length; i++) {
+        if (!pr_commenters.hasOwnProperty(comments[i].user.login))
+            pr_commenters[comments[i].user.login]=0;
+        pr_commenters[comments[i].user.login]++;
+        if (comments[i].body.indexOf("LGTM") != -1) {
+            pr_lgtm += " "+comments[i].user.login
+        }
+        pr_body+="<p>"+comments[i].body+"</p>"
+    }
+    pr_commenters_str = ""
+    for (var key in pr_commenters) {
+        pr_commenters_str += " "+key+"("+pr_commenters[key]+")";
+    }
+    //pr_info_type = "comments"
+    pr_comments = pr_extra[pr_info_type];
+    pr_comments[pr_id] = { "count":comments.length, "commenters":pr_commenters_str, "lgtms":pr_lgtm }
+    render_comments(pr_id, pr_info_type);
+/*
+    container_debug.innerHTML += pr_id+" "+ pr_comments[pr_id].count
+                                 //+"<br>"+ pr_comments[pr_id].content+"<br>"
+                                 +pr_body
+*/
+}
+
+
+var render_details = false;
+var render_comments_state = false;
+var render_reviews_state = false;
+var admin_mode = false;
+
+function handleAdmin() {
+
+    if (!render_details) return;
+    admin_mode = !admin_mode;
+    render_title();
+}
+function render() {
+
+    render_title();
+
+    if (render_details)
+        render_all_details();
+    else
+        render_summary();
+
+}
+
+function render_title() {
+    details_state = (render_details)?"checked":"";
+    all_comments_state = (render_comments_state)?"checked":"";
+    all_reviews_state = (render_reviews_state)?"checked":"";
+    title = '<b>Total PRs <b onclick="handleAdmin()">:</b> '+total_pr_count+'</b>'
+              +'<input type="checkbox" id="details" name="details" value="Bike" onclick="loadDetails()" '+details_state+ ' > details </input>'
+
+    if (admin_mode)
+        title +='<font color=blue><input type="checkbox" id="comments" name="details" value="Bike" onclick="render_all_comments(\'comments\')" '+all_comments_state+ ' > comments </input> </font>'
+              +'<font color=orange><input type="checkbox" id="reviews" name="details" value="Bike" onclick="render_all_comments(\'reviews\')" '+all_reviews_state+ ' > reviews </input></font>'
+
+    container_title.innerHTML = title;
+
+}
+
+function render_summary() {
+
+    var cols =0;
+    pr_out = "<table border=0><tr>"
+    for (var key in users) {
+        pr_out += "<td align=bottom>"+ key + "</td><td align=center width=60><b> " + users[key].length + "</b></td>"
+        cols++;
+        if (cols == 2) {
+            pr_out += "</tr><tr>"
+            cols = 0;
+        }
+    }
+        pr_out += "</td></tr></table>"
+        out = pr_out;
+
+        container.innerHTML = out;
+}
+
+
+
+function render_all_details() {
+    pr_out = "<table border=0><tr><td>"
+
+        for (var key in users) {
+            pr_out += "<table height=00 border=0><tr><td align=bottom><b>"+ key + "</b> " + users[key].length + "</td></tr>"
+        if (render_details) {
+            pr_out += "<tr><td><table border=1>"
+            for (i=0; i < users[key].length; i++) {
+                var pr = users[key][i];
+                //out += "<tr><td>" + pr.id + "</td><td>"+ pr.title +"</td></tr>";
+                pr_out += "<tr id=row_"+pr.id+" >"
+                    for (var field in pr) {
+                        if (field == "id")
+                            pr_out += "<td><a href=https://github.com/apache/cloudstack/pull/"+ pr[field] +">" +pr[field] + "</td>";
+                        else if(field == "reviews" || field == "comments")
+                           pr_out += "";//"<td><a href="+pr[field]+" > comments </a></td>";
+                        else
+                            pr_out += "<td>"+ pr[field] +"</td>";
+                    }
+                pr_out += extend_pr_details("comments", pr);
+                pr_out += extend_pr_details("reviews", pr);
+/*
+                pr_info_type = "comments";
+                pr_comments = pr_extra[pr_info_type];
+                if (pr_comments[pr.id] != null) {
+                    for (var field in pr_comments[pr.id]) {
+                            pr_out += "<td>"+ pr_comments[pr.id][field] +"</td>";
+                    }
+                } else {
+                    pr_out += "<td><div id=comments_"+pr.id+" >"
+                                //+ '<input type="checkbox" id="details" name="details" value="Bike" onclick=loadComments("'+pr[field]+'")  > comments '
+                                //+ '<a onclick=loadComments("'+pr.reviews+'")  > comments </a>'
+                                + '<a onclick=loadComments("'+pr.comments+'") href="#" > comments </a>'
+                                + "</div></td>";
+
+                }
+*/
+                    
+                pr_out += "</tr>"
+            }
+            pr_out +="</table></td></tr>"
+        }
+            pr_out += "</table>"
+       }
+        pr_out += "</td></tr></table>"
+        out = pr_out;
+
+        container.innerHTML = out;
+}
+function extend_pr_details(pr_info_type, pr) {
+
+var pr_out = ""
+    tblcolor = (pr_info_type == "comments")?'blue':'orange';
+                pr_comments = pr_extra[pr_info_type];
+                if (pr_comments[pr.id] != null) {
+                    for (var field in pr_comments[pr.id]) {
+                            pr_out += "<td style=color:"+tblcolor+">"+ pr_comments[pr.id][field] +"</td>";
+                    }
+                } else {
+                    pr_out += "<td><div id="+pr_info_type+"_"+pr.id+" >"
+                                //+ '<input type="checkbox" id="details" name="details" value="Bike" onclick=loadComments("'+pr[field]+'")  > comments '
+                                //+ '<a onclick=loadComments("'+pr.reviews+'")  > comments </a>'
+                                + '<a onclick=loadComments("'+pr_info_type+'","'+pr[pr_info_type]+'") href="#" > '+pr_info_type+' </a>'
+                                + "</div></td>";
+
+                }
+
+return pr_out;
+
+}
+function render_comments(pr_id, pr_info_type) {
+    //pr_info_type = "comments"
+    pr_comments = pr_extra[pr_info_type];
+    tblcolor = (pr_info_type == "comments")?'blue':'orange';
+    comments="<table border=1 style='color:"+tblcolor+"' ><tr>"
+      if (pr_comments[pr_id] != null && pr_comments[pr_id].count != 0) {
+          for (var field in pr_comments[pr_id]) {
+              comments += "<td>"+ pr_comments[pr_id][field] +"</td>";
+         }
+      if (pr_comments[pr_id].count > 5) {
+        document.getElementById("row_"+pr_id).style.color="red"
+     }
+
+    }
+     comments+="</tr></table>"
+
+      prc_container = document.getElementById(pr_info_type+"_"+pr_id);
+      prc_container.innerHTML = comments;
+}
+
+function render_all_comments(pr_info_type) {
+
+     if (pr_info_type == "comments") {
+         if (render_details && !render_comments_state) {
+             render_comments_state = true;
+         } else {
+             document.getElementById("comments").checked = render_comments_state;
+             return;
+         }
+     } else if (pr_info_type == "reviews") {
+         if (render_details && !render_reviews_state) {
+             render_reviews_state = true;
+         } else {
+             document.getElementById("reviews").checked = render_reviews_state;
+             return;
+         }
+     } else {
+        return;
+     }
+
+     var count = 0;
+        for (var key in users) {
+            for (i=0; i < users[key].length; i++) {
+                var pr = users[key][i];
+                //out += "<tr><td>" + pr.id + "</td><td>"+ pr.title +"</td></tr>";
+                 count ++;
+                //if (count <10)
+                //loadComments(pr.reviews);
+                loadComments(pr_info_type, pr[pr_info_type]);
+            }
+       }
+ 
+}
+
+function loadDetails() {
+
+   render_details = !render_details;
+   render();
+}
+
+$(document).ready(function() {
+//document.write('<div id="content-git"> </div>');
+loadjson();
+});
+</script>
+</head>
+<body>
+<header>
+   <h3>ACS github Prs</h3>
+</header>
+<table border=0>
+<tr><td>
+    <div id="content-title"> </div>
+</td></tr>
+<tr><td height=200 border=0>
+    <div id="content-git"> </div>
+</td></tr>
+<tr><td height=200 border=1>
+    <div id="content-debug"> </div>
+</td></tr>
+
+</table>
+<footer>Copyright &copy; Srinivas</footer>
+</body>
+</html>
+<!--
+-->
+
