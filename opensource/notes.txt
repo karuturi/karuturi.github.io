@@ -1,0 +1,6 @@
+Open source is a powerful way to learn, grow, and contribute.
+Choose projects that align with your interests and skill level.
+Effective communication and respectful interactions are vital.
+Testing your contributions ensures quality and builds trust.
+Maintainers play a crucial role in guiding projects.
+Contributions go beyond code: documentation, design, and community support are equally valuable.
