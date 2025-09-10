@@ -4,3 +4,8 @@ Effective communication and respectful interactions are vital.
 Testing your contributions ensures quality and builds trust.
 Maintainers play a crucial role in guiding projects.
 Contributions go beyond code: documentation, design, and community support are equally valuable.
+
+
+
+https://github.com/microsoft/vscode/issues/261780
+CXXFLAGS="-std=c++20" npm install
