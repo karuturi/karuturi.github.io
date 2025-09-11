@@ -54,9 +54,9 @@ When a class has many constructor parameters, it can be difficult to write and r
 
 #### Benefits
 
-Readability: Client code is more readable, as the purpose of each parameter is clear.
-Flexibility: Optional parameters can be omitted or specified in any order.
-Immutability: The built object can be immutable, providing thread-safety benefits.
+- **Readability:** Client code is more readable, as the purpose of each parameter is clear.
+- **Flexibility:** Optional parameters can be omitted or specified in any order.
+- **Immutability:** The built object can be immutable, providing thread-safety benefits.
 
 #### Java Implementation
 ```java
@@ -165,21 +165,24 @@ public class DatabaseConnection {
 }
 ```
 In this approach, the private constructor ensures that the class cannot be instantiated from outside. The INSTANCE field provides global access to the singleton instance.
+
 #### Enum Approach
 ```java
 public enum DatabaseConnection {
     INSTANCE;
 
-    public void connected() {
+    public void connect() {
         System.out.println("Connected to database...");
     }
 }
 ```
 In this approach, the enum type ensures that only one instance is created. The INSTANCE field is implicitly public and provides global access to the singleton instance.
+
 #### Benefits
 Both approaches provide several benefits, including:
-- **Thread-safety:** Both approaches ensure that the singleton instance is thread-safe.
-- **Serialization safety:** The enum approach provides serialization safety, ensuring that the singleton property is preserved even after serialization and deserialization.
+
+ - **Thread-safety:** Both approaches ensure that the singleton instance is thread-safe.
+ - **Serialization safety:** The enum approach provides serialization safety, ensuring that the singleton property is preserved even after serialization and deserialization.
 
 #### Client Code
 ```java
@@ -190,7 +193,8 @@ public class Main {
     }
 }
 ```
-In this example, we access the singleton instance using the INSTANCE field and call the sing() method.
+In this example, we access the singleton instance using the INSTANCE field and call the connect() method.
+
 #### Kotlin Implementation
 ```kotlin
 object DatabaseConnection {
@@ -229,14 +233,17 @@ In this example, the private constructor ensures that the class cannot be instan
 
 #### Benefits
 Using a private constructor to enforce noninstantiability provides several benefits, including:
+
 - **Clear intent:** The private constructor clearly communicates that the class is not intended to be instantiated.
- - **Prevents instantiation:** The private constructor prevents accidental instantiation of the class.
+- **Prevents instantiation:** The private constructor prevents accidental instantiation of the class.
 
 #### Best Practices
 When enforcing noninstantiability, consider the following best practices:
+
  - **Make the constructor private:** Ensure that the constructor is private to prevent instantiation.
  - **Throw an AssertionError:** Throwing an AssertionError in the constructor makes it clear that instantiation is not intended.
-####Kotlin Implementation
+
+#### Kotlin Implementation
 ```kotlin
 class UtilityClass private constructor() {
     companion object {
@@ -264,10 +271,19 @@ Dependency injection is a design pattern that allows components to be loosely co
 
 #### Hardwiring Resources
 ```java
-public class Lexicon {
-    private static final Dictionary dictionary = new MerriamWebster();
+public class MerriamWebster implements Dictionary {
+    @Override
+    public void define(String word) {
+        System.out.println("Defining " + word + "...");
+    }
+}
 
-    public Lexicon() {}
+public class Lexicon {
+    private final Dictionary dictionary 
+
+    public Lexicon() {
+      this.dictionary = = new MerriamWebster();
+    }
 
     public void lookup(String word) {
         dictionary.define(word);
@@ -278,6 +294,17 @@ In this example, the Lexicon class is tightly coupled to the MerriamWebster dict
 
 #### Dependency Injection
 ```java
+public interface Dictionary {
+    void define(String word);
+}
+
+public class MerriamWebster implements Dictionary {
+    @Override
+    public void define(String word) {
+        System.out.println("Defining " + word + "...");
+    }
+}
+
 public class Lexicon {
     private final Dictionary dictionary;
 
@@ -289,37 +316,55 @@ public class Lexicon {
         dictionary.define(word);
     }
 }
+
+// Client code
+public class Main {
+    public static void main(String[] args) {
+        Dictionary dictionary = new MerriamWebster();
+        Lexicon lexicon = new Lexicon(dictionary);
+        lexicon.lookup("Hello");
+    }
+}
 ```
 
 In this example, the Lexicon class is decoupled from the specific dictionary implementation. Instead, it depends on the Dictionary interface, which can be implemented by different dictionaries.
 
 #### Benefits
 Dependency injection provides several benefits, including:
+
 - **Loose coupling:** Components are decoupled, making it easier to test, maintain, and extend the system.
 - **Testability:** Components can be tested in isolation using mock dependencies.
 - **Flexibility:** Components can be used with different dependencies, making it easier to adapt to changing requirements.
 
 #### Best Practices
 When using dependency injection, consider the following best practices:
+
 - **Use interfaces:** Define interfaces for dependencies to decouple components from specific implementations.
 - **Use constructor injection:** Inject dependencies through constructors to ensure that components are properly initialized.
 
 #### Kotlin Implementation
 ```kotlin
-class Lexicon(private val dictionary: Dictionary) {
-    fun lookup(word: String) {
-        dictionary.define(word)
-    }
-}
-
 interface Dictionary {
     fun define(word: String)
 }
 
 class MerriamWebster : Dictionary {
     override fun define(word: String) {
-        println("Defining $word...")
+      println("Defining $word...")
     }
+}
+
+class Lexicon(private val dictionary: Dictionary) {
+    fun lookup(word: String) {
+      dictionary.define(word)
+    }
+}
+
+// Client code
+fun main() {
+    val dictionary: Dictionary = MerriamWebster()
+    val lexicon = Lexicon(dictionary)
+    lexicon.lookup("Hello")
 }
 ```
 In Kotlin, you can use dependency injection in a similar way to Java.

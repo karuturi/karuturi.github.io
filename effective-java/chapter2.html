@@ -306,10 +306,14 @@ Parameters</h3>
 write and read client code. The builder pattern provides a more flexible
 and readable alternative.</p>
 <h4 id="benefits">Benefits</h4>
-<p>Readability: Client code is more readable, as the purpose of each
-parameter is clear. Flexibility: Optional parameters can be omitted or
-specified in any order. Immutability: The built object can be immutable,
-providing thread-safety benefits.</p>
+<ul>
+<li><strong>Readability:</strong> Client code is more readable, as the
+purpose of each parameter is clear.</li>
+<li><strong>Flexibility:</strong> Optional parameters can be omitted or
+specified in any order.</li>
+<li><strong>Immutability:</strong> The built object can be immutable,
+providing thread-safety benefits.</li>
+</ul>
 <h4 id="java-implementation-1">Java Implementation</h4>
 <div class="sourceCode" id="cb3"><pre
 class="sourceCode java"><code class="sourceCode java"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> NutritionFacts <span class="op">{</span></span>
@@ -417,23 +421,28 @@ class="sourceCode java"><code class="sourceCode java"><span id="cb5-1"><a href="
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>In this approach, the private constructor ensures that the class
 cannot be instantiated from outside. The INSTANCE field provides global
-access to the singleton instance. #### Enum Approach</p>
+access to the singleton instance.</p>
+<h4 id="enum-approach">Enum Approach</h4>
 <div class="sourceCode" id="cb6"><pre
 class="sourceCode java"><code class="sourceCode java"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">enum</span> DatabaseConnection <span class="op">{</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    INSTANCE<span class="op">;</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">connected</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">connect</span><span class="op">()</span> <span class="op">{</span></span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        <span class="bu">System</span><span class="op">.</span><span class="fu">out</span><span class="op">.</span><span class="fu">println</span><span class="op">(</span><span class="st">&quot;Connected to database...&quot;</span><span class="op">);</span></span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>In this approach, the enum type ensures that only one instance is
 created. The INSTANCE field is implicitly public and provides global
-access to the singleton instance. #### Benefits Both approaches provide
-several benefits, including: - <strong>Thread-safety:</strong> Both
-approaches ensure that the singleton instance is thread-safe. -
-<strong>Serialization safety:</strong> The enum approach provides
+access to the singleton instance.</p>
+<h4 id="benefits-1">Benefits</h4>
+<p>Both approaches provide several benefits, including:</p>
+<ul>
+<li><strong>Thread-safety:</strong> Both approaches ensure that the
+singleton instance is thread-safe.</li>
+<li><strong>Serialization safety:</strong> The enum approach provides
 serialization safety, ensuring that the singleton property is preserved
-even after serialization and deserialization.</p>
+even after serialization and deserialization.</li>
+</ul>
 <h4 id="client-code">Client Code</h4>
 <div class="sourceCode" id="cb7"><pre
 class="sourceCode java"><code class="sourceCode java"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> Main <span class="op">{</span></span>
@@ -443,7 +452,8 @@ class="sourceCode java"><code class="sourceCode java"><span id="cb7-1"><a href="
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>In this example, we access the singleton instance using the INSTANCE
-field and call the sing() method. #### Kotlin Implementation</p>
+field and call the connect() method.</p>
+<h4 id="kotlin-implementation-2">Kotlin Implementation</h4>
 <div class="sourceCode" id="cb8"><pre
 class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">object</span> DatabaseConnection <span class="op">{</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">fun</span> <span class="fu">connect</span><span class="op">()</span> <span class="op">{</span></span>
@@ -483,19 +493,26 @@ class="sourceCode java"><code class="sourceCode java"><span id="cb9-1"><a href="
 <p>In this example, the private constructor ensures that the class
 cannot be instantiated from outside. The AssertionError thrown in the
 constructor makes it clear that instantiation is not intended.</p>
-<h4 id="benefits-1">Benefits</h4>
+<h4 id="benefits-2">Benefits</h4>
 <p>Using a private constructor to enforce noninstantiability provides
-several benefits, including: - <strong>Clear intent:</strong> The
-private constructor clearly communicates that the class is not intended
-to be instantiated. - <strong>Prevents instantiation:</strong> The
-private constructor prevents accidental instantiation of the class.</p>
+several benefits, including:</p>
+<ul>
+<li><strong>Clear intent:</strong> The private constructor clearly
+communicates that the class is not intended to be instantiated.</li>
+<li><strong>Prevents instantiation:</strong> The private constructor
+prevents accidental instantiation of the class.</li>
+</ul>
 <h4 id="best-practices">Best Practices</h4>
 <p>When enforcing noninstantiability, consider the following best
-practices: - <strong>Make the constructor private:</strong> Ensure that
-the constructor is private to prevent instantiation. - <strong>Throw an
-AssertionError:</strong> Throwing an AssertionError in the constructor
-makes it clear that instantiation is not intended. ####Kotlin
-Implementation</p>
+practices:</p>
+<ul>
+<li><strong>Make the constructor private:</strong> Ensure that the
+constructor is private to prevent instantiation.</li>
+<li><strong>Throw an AssertionError:</strong> Throwing an AssertionError
+in the constructor makes it clear that instantiation is not
+intended.</li>
+</ul>
+<h4 id="kotlin-implementation-3">Kotlin Implementation</h4>
 <div class="sourceCode" id="cb10"><pre
 class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> UtilityClass <span class="kw">private</span> <span class="kw">constructor</span><span class="op">()</span> <span class="op">{</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">companion</span> <span class="kw">object</span> <span class="op">{</span></span>
@@ -534,65 +551,107 @@ system. Instead of hardwiring resources, prefer dependency injection to
 provide dependencies to a class.</p>
 <h4 id="hardwiring-resources">Hardwiring Resources</h4>
 <div class="sourceCode" id="cb11"><pre
-class="sourceCode java"><code class="sourceCode java"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> Lexicon <span class="op">{</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="bu">Dictionary</span> dictionary <span class="op">=</span> <span class="kw">new</span> <span class="fu">MerriamWebster</span><span class="op">();</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="fu">Lexicon</span><span class="op">()</span> <span class="op">{}</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">lookup</span><span class="op">(</span><span class="bu">String</span> word<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>        dictionary<span class="op">.</span><span class="fu">define</span><span class="op">(</span>word<span class="op">);</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+class="sourceCode java"><code class="sourceCode java"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> MerriamWebster <span class="kw">implements</span> <span class="bu">Dictionary</span> <span class="op">{</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">@Override</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">define</span><span class="op">(</span><span class="bu">String</span> word<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>        <span class="bu">System</span><span class="op">.</span><span class="fu">out</span><span class="op">.</span><span class="fu">println</span><span class="op">(</span><span class="st">&quot;Defining &quot;</span> <span class="op">+</span> word <span class="op">+</span> <span class="st">&quot;...&quot;</span><span class="op">);</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> Lexicon <span class="op">{</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">final</span> <span class="bu">Dictionary</span> dictionary </span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="fu">Lexicon</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>      <span class="kw">this</span><span class="op">.</span><span class="fu">dictionary</span> <span class="op">=</span> <span class="op">=</span> <span class="kw">new</span> <span class="fu">MerriamWebster</span><span class="op">();</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">lookup</span><span class="op">(</span><span class="bu">String</span> word<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>        dictionary<span class="op">.</span><span class="fu">define</span><span class="op">(</span>word<span class="op">);</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>In this example, the Lexicon class is tightly coupled to the
 MerriamWebster dictionary. This makes it difficult to test or use the
 Lexicon class with a different dictionary.</p>
 <h4 id="dependency-injection">Dependency Injection</h4>
 <div class="sourceCode" id="cb12"><pre
-class="sourceCode java"><code class="sourceCode java"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> Lexicon <span class="op">{</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">final</span> <span class="bu">Dictionary</span> dictionary<span class="op">;</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="fu">Lexicon</span><span class="op">(</span><span class="bu">Dictionary</span> dictionary<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">this</span><span class="op">.</span><span class="fu">dictionary</span> <span class="op">=</span> Objects<span class="op">.</span><span class="fu">requireNonNull</span><span class="op">(</span>dictionary<span class="op">);</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">lookup</span><span class="op">(</span><span class="bu">String</span> word<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>        dictionary<span class="op">.</span><span class="fu">define</span><span class="op">(</span>word<span class="op">);</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+class="sourceCode java"><code class="sourceCode java"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">interface</span> <span class="bu">Dictionary</span> <span class="op">{</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">void</span> <span class="fu">define</span><span class="op">(</span><span class="bu">String</span> word<span class="op">);</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> MerriamWebster <span class="kw">implements</span> <span class="bu">Dictionary</span> <span class="op">{</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">@Override</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">define</span><span class="op">(</span><span class="bu">String</span> word<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>        <span class="bu">System</span><span class="op">.</span><span class="fu">out</span><span class="op">.</span><span class="fu">println</span><span class="op">(</span><span class="st">&quot;Defining &quot;</span> <span class="op">+</span> word <span class="op">+</span> <span class="st">&quot;...&quot;</span><span class="op">);</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> Lexicon <span class="op">{</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">final</span> <span class="bu">Dictionary</span> dictionary<span class="op">;</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="fu">Lexicon</span><span class="op">(</span><span class="bu">Dictionary</span> dictionary<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>        <span class="kw">this</span><span class="op">.</span><span class="fu">dictionary</span> <span class="op">=</span> Objects<span class="op">.</span><span class="fu">requireNonNull</span><span class="op">(</span>dictionary<span class="op">);</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">lookup</span><span class="op">(</span><span class="bu">String</span> word<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>        dictionary<span class="op">.</span><span class="fu">define</span><span class="op">(</span>word<span class="op">);</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="co">// Client code</span></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> Main <span class="op">{</span></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span><span class="op">(</span><span class="bu">String</span><span class="op">[]</span> args<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>        <span class="bu">Dictionary</span> dictionary <span class="op">=</span> <span class="kw">new</span> <span class="fu">MerriamWebster</span><span class="op">();</span></span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>        Lexicon lexicon <span class="op">=</span> <span class="kw">new</span> <span class="fu">Lexicon</span><span class="op">(</span>dictionary<span class="op">);</span></span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>        lexicon<span class="op">.</span><span class="fu">lookup</span><span class="op">(</span><span class="st">&quot;Hello&quot;</span><span class="op">);</span></span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>In this example, the Lexicon class is decoupled from the specific
 dictionary implementation. Instead, it depends on the Dictionary
 interface, which can be implemented by different dictionaries.</p>
-<h4 id="benefits-2">Benefits</h4>
-<p>Dependency injection provides several benefits, including: -
-<strong>Loose coupling:</strong> Components are decoupled, making it
-easier to test, maintain, and extend the system. -
-<strong>Testability:</strong> Components can be tested in isolation
-using mock dependencies. - <strong>Flexibility:</strong> Components can
-be used with different dependencies, making it easier to adapt to
-changing requirements.</p>
+<h4 id="benefits-3">Benefits</h4>
+<p>Dependency injection provides several benefits, including:</p>
+<ul>
+<li><strong>Loose coupling:</strong> Components are decoupled, making it
+easier to test, maintain, and extend the system.</li>
+<li><strong>Testability:</strong> Components can be tested in isolation
+using mock dependencies.</li>
+<li><strong>Flexibility:</strong> Components can be used with different
+dependencies, making it easier to adapt to changing requirements.</li>
+</ul>
 <h4 id="best-practices-1">Best Practices</h4>
 <p>When using dependency injection, consider the following best
-practices: - <strong>Use interfaces:</strong> Define interfaces for
-dependencies to decouple components from specific implementations. -
-<strong>Use constructor injection:</strong> Inject dependencies through
-constructors to ensure that components are properly initialized.</p>
-<h4 id="kotlin-implementation-2">Kotlin Implementation</h4>
+practices:</p>
+<ul>
+<li><strong>Use interfaces:</strong> Define interfaces for dependencies
+to decouple components from specific implementations.</li>
+<li><strong>Use constructor injection:</strong> Inject dependencies
+through constructors to ensure that components are properly
+initialized.</li>
+</ul>
+<h4 id="kotlin-implementation-4">Kotlin Implementation</h4>
 <div class="sourceCode" id="cb13"><pre
-class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Lexicon<span class="op">(</span><span class="kw">private</span> <span class="kw">val</span> <span class="va">dictionary</span><span class="op">:</span> <span class="dt">Dictionary</span><span class="op">)</span> <span class="op">{</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">fun</span> <span class="fu">lookup</span><span class="op">(</span><span class="va">word</span><span class="op">:</span> <span class="dt">String</span><span class="op">)</span> <span class="op">{</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>        dictionary<span class="op">.</span>define<span class="op">(</span>word<span class="op">)</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="kw">interface</span> Dictionary <span class="op">{</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">fun</span> <span class="fu">define</span><span class="op">(</span><span class="va">word</span><span class="op">:</span> <span class="dt">String</span><span class="op">)</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>}</span>
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">interface</span> Dictionary <span class="op">{</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">fun</span> <span class="fu">define</span><span class="op">(</span><span class="va">word</span><span class="op">:</span> <span class="dt">String</span><span class="op">)</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="fu">MerriamWebster</span> <span class="op">:</span> <span class="dt">Dictionary</span> <span class="op">{</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">override</span> <span class="kw">fun</span> <span class="fu">define</span><span class="op">(</span><span class="va">word</span><span class="op">:</span> <span class="dt">String</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>      println<span class="op">(</span><span class="st">&quot;Defining </span><span class="ss">$word</span><span class="st">...&quot;</span><span class="op">)</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
 <span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="fu">MerriamWebster</span> <span class="op">:</span> <span class="dt">Dictionary</span> <span class="op">{</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">override</span> <span class="kw">fun</span> <span class="fu">define</span><span class="op">(</span><span class="va">word</span><span class="op">:</span> <span class="dt">String</span><span class="op">)</span> <span class="op">{</span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>        println<span class="op">(</span><span class="st">&quot;Defining </span><span class="ss">$word</span><span class="st">...&quot;</span><span class="op">)</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Lexicon<span class="op">(</span><span class="kw">private</span> <span class="kw">val</span> <span class="va">dictionary</span><span class="op">:</span> <span class="dt">Dictionary</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">fun</span> <span class="fu">lookup</span><span class="op">(</span><span class="va">word</span><span class="op">:</span> <span class="dt">String</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>      dictionary<span class="op">.</span>define<span class="op">(</span>word<span class="op">)</span></span>
 <span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="co">// Client code</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="kw">fun</span> <span class="fu">main</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> <span class="va">dictionary</span><span class="op">:</span> Dictionary <span class="op">=</span> MerriamWebster<span class="op">()</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> <span class="va">lexicon</span> <span class="op">=</span> Lexicon<span class="op">(</span>dictionary<span class="op">)</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>    lexicon<span class="op">.</span>lookup<span class="op">(</span><span class="st">&quot;Hello&quot;</span><span class="op">)</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>In Kotlin, you can use dependency injection in a similar way to Java.
 By preferring dependency injection to hardwiring resources, you can
 write more flexible, testable, and maintainable code.</p>
