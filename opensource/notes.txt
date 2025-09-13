@@ -6,6 +6,8 @@ Maintainers play a crucial role in guiding projects.
 Contributions go beyond code: documentation, design, and community support are equally valuable.
 
 
+Richard Stallman is a foundational advocate for software freedom and the ethical basis behind free and open source software. His work on GNU and the GPL license hugely impacted software development, ensuring freedoms that underpin the open source ecosystem today.
+
 
 https://github.com/microsoft/vscode/issues/261780
 CXXFLAGS="-std=c++20" npm install
