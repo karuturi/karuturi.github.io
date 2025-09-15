@@ -1,438 +1,271 @@
-<!doctype html>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="generator" content="pandoc" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, user-scalable=yes"
-    />
-    <title>Chapter 2: Creating and Destroying Objects</title>
-    <style>
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>chapter2</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
       html {
-        color: #1a1a1a;
-        background-color: #fdfdfd;
+        background-color: white;
       }
       body {
-        margin: 0 auto;
-        max-width: 36em;
-        padding-left: 50px;
-        padding-right: 50px;
-        padding-top: 50px;
-        padding-bottom: 50px;
-        hyphens: auto;
-        overflow-wrap: break-word;
-        text-rendering: optimizeLegibility;
-        font-kerning: normal;
-      }
-      @media (max-width: 600px) {
-        body {
-          font-size: 0.9em;
-          padding: 12px;
-        }
-        h1 {
-          font-size: 1.8em;
-        }
-      }
-      @media print {
-        html {
-          background-color: white;
-        }
-        body {
-          background-color: transparent;
-          color: black;
-          font-size: 12pt;
-        }
-        p,
-        h2,
-        h3 {
-          orphans: 3;
-          widows: 3;
-        }
-        h2,
-        h3,
-        h4 {
-          page-break-after: avoid;
-        }
-      }
-      p {
-        margin: 1em 0;
-      }
-      a {
-        color: #1a1a1a;
-      }
-      a:visited {
-        color: #1a1a1a;
-      }
-      img {
-        max-width: 100%;
-      }
-      svg {
-        height: auto;
-        max-width: 100%;
-      }
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6 {
-        margin-top: 1.4em;
-      }
-      h5,
-      h6 {
-        font-size: 1em;
-        font-style: italic;
-      }
-      h6 {
-        font-weight: normal;
-      }
-      ol,
-      ul {
-        padding-left: 1.7em;
-        margin-top: 1em;
-      }
-      li > ol,
-      li > ul {
-        margin-top: 0;
-      }
-      blockquote {
-        margin: 1em 0 1em 1.7em;
-        padding-left: 1em;
-        border-left: 2px solid #e6e6e6;
-        color: #606060;
-      }
-      code {
-        font-family: Menlo, Monaco, Consolas, "Lucida Console", monospace;
-        font-size: 85%;
-        margin: 0;
-        hyphens: manual;
-      }
-      pre {
-        margin: 1em 0;
-        overflow: auto;
-      }
-      pre code {
-        padding: 0;
-        overflow: visible;
-        overflow-wrap: normal;
-      }
-      .sourceCode {
         background-color: transparent;
-        overflow: visible;
+        color: black;
+        font-size: 12pt;
       }
-      hr {
-        border: none;
-        border-top: 1px solid #1a1a1a;
-        height: 1px;
-        margin: 1em 0;
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
       }
-      table {
-        margin: 1em 0;
-        border-collapse: collapse;
-        width: 100%;
-        overflow-x: auto;
-        display: block;
-        font-variant-numeric: lining-nums tabular-nums;
+      h2, h3, h4 {
+        page-break-after: avoid;
       }
-      table caption {
-        margin-bottom: 0.75em;
-      }
-      tbody {
-        margin-top: 0.5em;
-        border-top: 1px solid #1a1a1a;
-        border-bottom: 1px solid #1a1a1a;
-      }
-      th {
-        border-top: 1px solid #1a1a1a;
-        padding: 0.25em 0.5em 0.25em 0.5em;
-      }
-      td {
-        padding: 0.125em 0.5em 0.25em 0.5em;
-      }
-      header {
-        margin-bottom: 4em;
-        text-align: center;
-      }
-      #TOC li {
-        list-style: none;
-      }
-      #TOC ul {
-        padding-left: 1.3em;
-      }
-      #TOC > ul {
-        padding-left: 0;
-      }
-      #TOC a:not(:hover) {
-        text-decoration: none;
-      }
-      code {
-        white-space: pre-wrap;
-      }
-      span.smallcaps {
-        font-variant: small-caps;
-      }
-      div.columns {
-        display: flex;
-        gap: min(4vw, 1.5em);
-      }
-      div.column {
-        flex: auto;
-        overflow-x: auto;
-      }
-      div.hanging-indent {
-        margin-left: 1.5em;
-        text-indent: -1.5em;
-      }
-      /* The extra [class] is a hack that increases specificity enough to
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
        override a similar rule in reveal.js */
-      ul.task-list[class] {
-        list-style: none;
-      }
-      ul.task-list li input[type="checkbox"] {
-        font-size: inherit;
-        width: 0.8em;
-        margin: 0 0.8em 0.2em -1.6em;
-        vertical-align: middle;
-      }
-      .display.math {
-        display: block;
-        text-align: center;
-        margin: 0.5rem auto;
-      }
-      /* CSS for syntax highlighting */
-      html {
-        -webkit-text-size-adjust: 100%;
-      }
-      pre > code.sourceCode {
-        white-space: pre;
-        position: relative;
-      }
-      pre > code.sourceCode > span {
-        display: inline-block;
-        line-height: 1.25;
-      }
-      pre > code.sourceCode > span:empty {
-        height: 1.2em;
-      }
-      .sourceCode {
-        overflow: visible;
-      }
-      code.sourceCode > span {
-        color: inherit;
-        text-decoration: inherit;
-      }
-      div.sourceCode {
-        margin: 1em 0;
-      }
-      pre.sourceCode {
-        margin: 0;
-      }
-      @media screen {
-        div.sourceCode {
-          overflow: auto;
-        }
-      }
-      @media print {
-        pre > code.sourceCode {
-          white-space: pre-wrap;
-        }
-        pre > code.sourceCode > span {
-          text-indent: -5em;
-          padding-left: 5em;
-        }
-      }
-      pre.numberSource code {
-        counter-reset: source-line 0;
-      }
-      pre.numberSource code > span {
-        position: relative;
-        left: -4em;
-        counter-increment: source-line;
-      }
-      pre.numberSource code > span > a:first-child::before {
-        content: counter(source-line);
-        position: relative;
-        left: -1em;
-        text-align: right;
-        vertical-align: baseline;
-        border: none;
-        display: inline-block;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        padding: 0 4px;
-        width: 4em;
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
         color: #aaaaaa;
       }
-      pre.numberSource {
-        margin-left: 3em;
-        border-left: 1px solid #aaaaaa;
-        padding-left: 4px;
-      }
-      div.sourceCode {
-      }
-      @media screen {
-        pre > code.sourceCode > span > a:first-child::before {
-          text-decoration: underline;
-        }
-      }
-      code span.al {
-        color: #ff0000;
-        font-weight: bold;
-      } /* Alert */
-      code span.an {
-        color: #60a0b0;
-        font-weight: bold;
-        font-style: italic;
-      } /* Annotation */
-      code span.at {
-        color: #7d9029;
-      } /* Attribute */
-      code span.bn {
-        color: #40a070;
-      } /* BaseN */
-      code span.bu {
-        color: #008000;
-      } /* BuiltIn */
-      code span.cf {
-        color: #007020;
-        font-weight: bold;
-      } /* ControlFlow */
-      code span.ch {
-        color: #4070a0;
-      } /* Char */
-      code span.cn {
-        color: #880000;
-      } /* Constant */
-      code span.co {
-        color: #60a0b0;
-        font-style: italic;
-      } /* Comment */
-      code span.cv {
-        color: #60a0b0;
-        font-weight: bold;
-        font-style: italic;
-      } /* CommentVar */
-      code span.do {
-        color: #ba2121;
-        font-style: italic;
-      } /* Documentation */
-      code span.dt {
-        color: #902000;
-      } /* DataType */
-      code span.dv {
-        color: #40a070;
-      } /* DecVal */
-      code span.er {
-        color: #ff0000;
-        font-weight: bold;
-      } /* Error */
-      code span.ex {
-      } /* Extension */
-      code span.fl {
-        color: #40a070;
-      } /* Float */
-      code span.fu {
-        color: #06287e;
-      } /* Function */
-      code span.im {
-        color: #008000;
-        font-weight: bold;
-      } /* Import */
-      code span.in {
-        color: #60a0b0;
-        font-weight: bold;
-        font-style: italic;
-      } /* Information */
-      code span.kw {
-        color: #007020;
-        font-weight: bold;
-      } /* Keyword */
-      code span.op {
-        color: #666666;
-      } /* Operator */
-      code span.ot {
-        color: #007020;
-      } /* Other */
-      code span.pp {
-        color: #bc7a00;
-      } /* Preprocessor */
-      code span.sc {
-        color: #4070a0;
-      } /* SpecialChar */
-      code span.ss {
-        color: #bb6688;
-      } /* SpecialString */
-      code span.st {
-        color: #4070a0;
-      } /* String */
-      code span.va {
-        color: #19177c;
-      } /* Variable */
-      code span.vs {
-        color: #4070a0;
-      } /* VerbatimString */
-      code span.wa {
-        color: #60a0b0;
-        font-weight: bold;
-        font-style: italic;
-      } /* Warning */
-    </style>
-  </head>
-  <body>
-    <h2 id="introduction-to-the-series">Introduction to the Series</h2>
-    <p>
-      “Effective Java” by Joshua Bloch helped me in writing robust, efficient,
-      and maintainable Java code. I’ve recently picked up Kotlin, I’m excited to
-      explore how the principles and best practices outlined in this book can be
-      applied to kotlin. In this series, I’ll be summarizing each chapter and
-      item, providing Java and Kotlin implementations where relevant, to help me
-      solidify my understanding of both languages.
-    </p>
-    <h2 id="chapter-2-creating-and-destroying-objects">
-      Chapter 2: Creating and Destroying Objects
-    </h2>
-    <ul>
-      <li>
-        <a href="#item-1">Item 1: Static Factory Methods</a>: Static factory
-        methods provide more flexibility and readability than constructors.
-      </li>
-      <li>
-        <a href="#item-2">Item 2: Builder Pattern</a>: The builder pattern is
-        useful when dealing with many constructor parameters.
-      </li>
-      <li>
-        <a href="#item-3">Item 3: Singleton Property</a>: Implementing
-        singletons using private constructors or enum types.
-      </li>
-      <li>
-        <a href="#item-4">Item 4: Noninstantiability</a>: Enforcing
-        noninstantiability using private constructors.
-      </li>
-      <li>
-        <a href="#item-5">Item 5: Dependency Injection</a>: Prefer dependency
-        injection to hardwiring resources.
-      </li>
-    </ul>
-    <h3 id="item-1-consider-static-factory-methods-instead-of-constructors">
-      <a id="item-1"></a> Item 1: Consider Static Factory Methods Instead of
-      Constructors
-    </h3>
-    <h4 id="summary">Summary</h4>
-    <p>
-      Static factory methods provide an alternative to constructors for creating
-      objects. They offer several benefits, including meaningful method names,
-      flexibility, and the ability to return objects of any subclass.
-    </p>
-    <h4 id="java-implementation">Java Implementation</h4>
-    <div class="sourceCode" id="cb1">
-      <pre
-        class="sourceCode java"
-      ><code class="sourceCode java"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> <span class="bu">Color</span> <span class="op">{</span></span>
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h2 id="introduction-to-the-series">Introduction to the Series</h2>
+<p>“Effective Java” by Joshua Bloch helped me in writing robust,
+efficient, and maintainable Java code. I’ve recently picked up Kotlin,
+I’m excited to explore how the principles and best practices outlined in
+this book can be applied to kotlin. In this series, I’ll be summarizing
+each chapter and item, providing Java and Kotlin implementations where
+relevant, to help me solidify my understanding of both languages.</p>
+<h2 id="chapter-2-creating-and-destroying-objects">Chapter 2: Creating
+and Destroying Objects</h2>
+<ul>
+<li><a href="#item-1">Item 1: Static Factory Methods</a>: Static factory
+methods provide more flexibility and readability than constructors.</li>
+<li><a href="#item-2">Item 2: Builder Pattern</a>: The builder pattern
+is useful when dealing with many constructor parameters.</li>
+<li><a href="#item-3">Item 3: Singleton Property</a>: Implementing
+singletons using private constructors or enum types.</li>
+<li><a href="#item-4">Item 4: Noninstantiability</a>: Enforcing
+noninstantiability using private constructors.</li>
+<li><a href="#item-5">Item 5: Dependency Injection</a>: Prefer
+dependency injection to hardwiring resources.</li>
+</ul>
+<h3
+id="item-1-consider-static-factory-methods-instead-of-constructors"><a id="item-1"></a>
+Item 1: Consider Static Factory Methods Instead of Constructors</h3>
+<h4 id="summary">Summary</h4>
+<p>Static factory methods provide an alternative to constructors for
+creating objects. They offer several benefits, including meaningful
+method names, flexibility, and the ability to return objects of any
+subclass.</p>
+<h4 id="java-implementation">Java Implementation</h4>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> <span class="bu">Color</span> <span class="op">{</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">final</span> <span class="dt">int</span> value<span class="op">;</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="bu">Color</span><span class="op">(</span><span class="dt">int</span> value<span class="op">)</span> <span class="op">{</span></span>
@@ -446,63 +279,44 @@
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">static</span> <span class="bu">Color</span> <span class="fu">ofRGB</span><span class="op">(</span><span class="dt">int</span> r<span class="op">,</span> <span class="dt">int</span> g<span class="op">,</span> <span class="dt">int</span> b<span class="op">)</span> <span class="op">{</span></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="kw">new</span> <span class="bu">Color</span><span class="op">((</span>r <span class="op">&lt;&lt;</span> <span class="dv">16</span><span class="op">)</span> <span class="op">|</span> <span class="op">(</span>g <span class="op">&lt;&lt;</span> <span class="dv">8</span><span class="op">)</span> <span class="op">|</span> b<span class="op">);</span></span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
-    </div>
-    <h4 id="kotlin-implementation">Kotlin Implementation</h4>
-    <div class="sourceCode" id="cb2">
-      <pre
-        class="sourceCode kotlin"
-      ><code class="sourceCode kotlin"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Color <span class="kw">private</span> <span class="kw">constructor</span><span class="op">(</span><span class="kw">val</span> <span class="va">value</span><span class="op">:</span> <span class="dt">Int</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h4 id="kotlin-implementation">Kotlin Implementation</h4>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Color <span class="kw">private</span> <span class="kw">constructor</span><span class="op">(</span><span class="kw">val</span> <span class="va">value</span><span class="op">:</span> <span class="dt">Int</span><span class="op">)</span> <span class="op">{</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">companion</span> <span class="kw">object</span> <span class="op">{</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">fun</span> <span class="fu">ofValue</span><span class="op">(</span><span class="va">value</span><span class="op">:</span> <span class="dt">Int</span><span class="op">)</span> <span class="op">=</span> Color<span class="op">(</span>value<span class="op">)</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        <span class="kw">fun</span> <span class="fu">ofRGB</span><span class="op">(</span><span class="va">r</span><span class="op">:</span> <span class="dt">Int</span><span class="op">,</span> <span class="va">g</span><span class="op">:</span> <span class="dt">Int</span><span class="op">,</span> <span class="va">b</span><span class="op">:</span> <span class="dt">Int</span><span class="op">)</span> <span class="op">=</span> Color<span class="op">((</span>r shl <span class="dv">16</span><span class="op">)</span> or <span class="op">(</span>g shl <span class="dv">8</span><span class="op">)</span> or b<span class="op">)</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
-    </div>
-    <p>
-      In Kotlin, the <code>companion object</code> is used to define static
-      members or functions that belong to the class itself, rather than
-      instances of the class. It’s similar to Java’s static members, but with
-      more flexibility. In this example, the
-      <code>companion object</code> allows us to define factory methods
-      <code>ofValue</code> and <code>ofRGB</code> that can be called without
-      creating an instance of the <code>Color</code> class. By using a
-      <code>companion object</code>, we can achieve similar functionality to
-      Java’s static factory methods, while also taking advantage of Kotlin’s
-      concise syntax and features.
-    </p>
-    <h3
-      id="item-2-consider-a-builder-when-faced-with-many-constructor-parameters"
-    >
-      <a id="item-2"></a> Item 2: Consider a Builder When Faced with Many
-      Constructor Parameters
-    </h3>
-    <h4 id="summary-1">Summary</h4>
-    <p>
-      When a class has many constructor parameters, it can be difficult to write
-      and read client code. The builder pattern provides a more flexible and
-      readable alternative.
-    </p>
-    <h4 id="benefits">Benefits</h4>
-    <ul>
-      <li>
-        <strong>Readability:</strong> Client code is more readable, as the
-        purpose of each parameter is clear.
-      </li>
-      <li>
-        <strong>Flexibility:</strong> Optional parameters can be omitted or
-        specified in any order.
-      </li>
-      <li>
-        <strong>Immutability:</strong> The built object can be immutable,
-        providing thread-safety benefits.
-      </li>
-    </ul>
-    <h4 id="java-implementation-1">Java Implementation</h4>
-    <div class="sourceCode" id="cb3">
-      <pre
-        class="sourceCode java"
-      ><code class="sourceCode java"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> NutritionFacts <span class="op">{</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>In Kotlin, the <code>companion object</code> is used to define static
+members or functions that belong to the class itself, rather than
+instances of the class. It’s similar to Java’s static members, but with
+more flexibility. In this example, the <code>companion object</code>
+allows us to define factory methods <code>ofValue</code> and
+<code>ofRGB</code> that can be called without creating an instance of
+the <code>Color</code> class. By using a <code>companion object</code>,
+we can achieve similar functionality to Java’s static factory methods,
+while also taking advantage of Kotlin’s concise syntax and features.</p>
+<h3
+id="item-2-consider-a-builder-when-faced-with-many-constructor-parameters"><a id="item-2"></a>
+Item 2: Consider a Builder When Faced with Many Constructor
+Parameters</h3>
+<h4 id="summary-1">Summary</h4>
+<p>When a class has many constructor parameters, it can be difficult to
+write and read client code. The builder pattern provides a more flexible
+and readable alternative.</p>
+<h4 id="benefits">Benefits</h4>
+<ul>
+<li><strong>Readability:</strong> Client code is more readable, as the
+purpose of each parameter is clear.</li>
+<li><strong>Flexibility:</strong> Optional parameters can be omitted or
+specified in any order.</li>
+<li><strong>Immutability:</strong> The built object can be immutable,
+providing thread-safety benefits.</li>
+</ul>
+<h4 id="java-implementation-1">Java Implementation</h4>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> NutritionFacts <span class="op">{</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">final</span> <span class="dt">int</span> servingSize<span class="op">;</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">final</span> <span class="dt">int</span> servings<span class="op">;</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">final</span> <span class="dt">int</span> calories<span class="op">;</span></span>
@@ -563,13 +377,10 @@
 <span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">calories</span><span class="op">(</span><span class="dv">100</span><span class="op">)</span></span>
 <span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">sodium</span><span class="op">(</span><span class="dv">35</span><span class="op">)</span></span>
 <span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">carbohydrate</span><span class="op">(</span><span class="dv">27</span><span class="op">)</span></span>
-<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">build</span><span class="op">();</span></span></code></pre>
-    </div>
-    <h4 id="kotlin-implementation-1">Kotlin Implementation</h4>
-    <div class="sourceCode" id="cb4">
-      <pre
-        class="sourceCode kotlin"
-      ><code class="sourceCode kotlin"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> NutritionFacts<span class="op">(</span></span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">build</span><span class="op">();</span></span></code></pre></div>
+<h4 id="kotlin-implementation-1">Kotlin Implementation</h4>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> NutritionFacts<span class="op">(</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> <span class="va">servingSize</span><span class="op">:</span> <span class="dt">Int</span><span class="op">,</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> <span class="va">servings</span><span class="op">:</span> <span class="dt">Int</span><span class="op">,</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> <span class="va">calories</span><span class="op">:</span> <span class="dt">Int</span> <span class="op">=</span> <span class="dv">0</span><span class="op">,</span></span>
@@ -585,30 +396,21 @@
 <span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="va">calories</span> <span class="op">=</span> <span class="dv">100</span><span class="op">,</span></span>
 <span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="va">sodium</span> <span class="op">=</span> <span class="dv">35</span><span class="op">,</span></span>
 <span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    <span class="va">carbohydrate</span> <span class="op">=</span> <span class="dv">27</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="op">)</span></span></code></pre>
-    </div>
-    <p>
-      In Kotlin, we can leverage default parameter values to simplify the
-      creation of objects with many parameters. This approach eliminates the
-      need for a separate builder class.
-    </p>
-    <h3
-      id="item-3-enforce-the-singleton-property-with-a-private-constructor-or-an-enum-type"
-    >
-      <a id="item-3"></a>Item 3: Enforce the Singleton Property with a Private
-      Constructor or an Enum Type
-    </h3>
-    <h4 id="summary-2">Summary</h4>
-    <p>
-      A singleton is a class designed to have only one instance per JVM,
-      providing a single global point of access. Enforcing this correctly avoids
-      issues like duplicate instances with inconsistent state.
-    </p>
-    <h4 id="private-constructor-approach">Private Constructor Approach</h4>
-    <div class="sourceCode" id="cb5">
-      <pre
-        class="sourceCode java"
-      ><code class="sourceCode java"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> DatabaseConnection <span class="op">{</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="op">)</span></span></code></pre></div>
+<p>In Kotlin, we can leverage default parameter values to simplify the
+creation of objects with many parameters. This approach eliminates the
+need for a separate builder class.</p>
+<h3
+id="item-3-enforce-the-singleton-property-with-a-private-constructor-or-an-enum-type"><a id="item-3"></a>Item
+3: Enforce the Singleton Property with a Private Constructor or an Enum
+Type</h3>
+<h4 id="summary-2">Summary</h4>
+<p>A singleton is a class designed to have only one instance per JVM,
+providing a single global point of access. Enforcing this correctly
+avoids issues like duplicate instances with inconsistent state.</p>
+<h4 id="private-constructor-approach">Private Constructor Approach</h4>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> DatabaseConnection <span class="op">{</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">final</span> DatabaseConnection INSTANCE <span class="op">=</span> <span class="kw">new</span> <span class="fu">DatabaseConnection</span><span class="op">();</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="fu">DatabaseConnection</span><span class="op">()</span> <span class="op">{}</span></span>
@@ -616,63 +418,44 @@
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">connect</span><span class="op">()</span> <span class="op">{</span></span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        <span class="bu">System</span><span class="op">.</span><span class="fu">out</span><span class="op">.</span><span class="fu">println</span><span class="op">(</span><span class="st">&quot;Connected to database...&quot;</span><span class="op">);</span></span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
-    </div>
-    <p>
-      In this approach, the private constructor ensures that the class cannot be
-      instantiated from outside. The INSTANCE field provides global access to
-      the singleton instance.
-    </p>
-    <h4 id="enum-approach">Enum Approach</h4>
-    <div class="sourceCode" id="cb6">
-      <pre
-        class="sourceCode java"
-      ><code class="sourceCode java"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">enum</span> DatabaseConnection <span class="op">{</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>In this approach, the private constructor ensures that the class
+cannot be instantiated from outside. The INSTANCE field provides global
+access to the singleton instance.</p>
+<h4 id="enum-approach">Enum Approach</h4>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">enum</span> DatabaseConnection <span class="op">{</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    INSTANCE<span class="op">;</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">connect</span><span class="op">()</span> <span class="op">{</span></span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        <span class="bu">System</span><span class="op">.</span><span class="fu">out</span><span class="op">.</span><span class="fu">println</span><span class="op">(</span><span class="st">&quot;Connected to database...&quot;</span><span class="op">);</span></span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
-    </div>
-    <p>
-      In this approach, the enum type ensures that only one instance is created.
-      The INSTANCE field is implicitly public and provides global access to the
-      singleton instance.
-    </p>
-    <h4 id="benefits-1">Benefits</h4>
-    <p>Both approaches provide several benefits, including:</p>
-    <ul>
-      <li>
-        <strong>Thread-safety:</strong> Both approaches ensure that the
-        singleton instance is thread-safe.
-      </li>
-      <li>
-        <strong>Serialization safety:</strong> The enum approach provides
-        serialization safety, ensuring that the singleton property is preserved
-        even after serialization and deserialization.
-      </li>
-    </ul>
-    <h4 id="client-code">Client Code</h4>
-    <div class="sourceCode" id="cb7">
-      <pre
-        class="sourceCode java"
-      ><code class="sourceCode java"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> Main <span class="op">{</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>In this approach, the enum type ensures that only one instance is
+created. The INSTANCE field is implicitly public and provides global
+access to the singleton instance.</p>
+<h4 id="benefits-1">Benefits</h4>
+<p>Both approaches provide several benefits, including:</p>
+<ul>
+<li><strong>Thread-safety:</strong> Both approaches ensure that the
+singleton instance is thread-safe.</li>
+<li><strong>Serialization safety:</strong> The enum approach provides
+serialization safety, ensuring that the singleton property is preserved
+even after serialization and deserialization.</li>
+</ul>
+<h4 id="client-code">Client Code</h4>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> Main <span class="op">{</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span><span class="op">(</span><span class="bu">String</span><span class="op">[]</span> args<span class="op">)</span> <span class="op">{</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>        DatabaseConnection dbConn <span class="op">=</span> DatabaseConnection<span class="op">.</span><span class="fu">INSTANCE</span><span class="op">;</span></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>        dbConn<span class="op">.</span><span class="fu">connect</span><span class="op">();</span></span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
-    </div>
-    <p>
-      In this example, we access the singleton instance using the INSTANCE field
-      and call the connect() method.
-    </p>
-    <h4 id="kotlin-implementation-2">Kotlin Implementation</h4>
-    <div class="sourceCode" id="cb8">
-      <pre
-        class="sourceCode kotlin"
-      ><code class="sourceCode kotlin"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">object</span> DatabaseConnection <span class="op">{</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>In this example, we access the singleton instance using the INSTANCE
+field and call the connect() method.</p>
+<h4 id="kotlin-implementation-2">Kotlin Implementation</h4>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">object</span> DatabaseConnection <span class="op">{</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">fun</span> <span class="fu">connect</span><span class="op">()</span> <span class="op">{</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>        println<span class="op">(</span><span class="st">&quot;Connected to database...&quot;</span><span class="op">)</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
@@ -681,31 +464,23 @@
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">// Client code</span></span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="kw">fun</span> <span class="fu">main</span><span class="op">()</span> <span class="op">{</span></span>
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    DatabaseConnection<span class="op">.</span>connect<span class="op">()</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
-    </div>
-    <p>
-      In Kotlin, we can use the <code>object</code> keyword to define a
-      singleton. The <code>object</code> declaration ensures that only one
-      instance is created, and provides global access to the singleton instance.
-      By using a private constructor or an enum type (or Kotlin’s
-      <code>object</code> declaration), you can enforce the singleton property
-      and ensure that your class is instantiated exactly once.
-    </p>
-    <h3 id="item-4-enforce-noninstantiability-with-a-private-constructor">
-      <a id="item-4"></a>Item 4: Enforce Noninstantiability with a Private
-      Constructor
-    </h3>
-    <h4 id="summary-3">Summary</h4>
-    <p>
-      Some classes, such as utility classes, are designed to be used statically
-      and should not be instantiated. To enforce noninstantiability, you can use
-      a private constructor.
-    </p>
-    <h4 id="example">Example</h4>
-    <div class="sourceCode" id="cb9">
-      <pre
-        class="sourceCode java"
-      ><code class="sourceCode java"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> UtilityClass <span class="op">{</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>In Kotlin, we can use the <code>object</code> keyword to define a
+singleton. The <code>object</code> declaration ensures that only one
+instance is created, and provides global access to the singleton
+instance. By using a private constructor or an enum type (or Kotlin’s
+<code>object</code> declaration), you can enforce the singleton property
+and ensure that your class is instantiated exactly once.</p>
+<h3
+id="item-4-enforce-noninstantiability-with-a-private-constructor"><a id="item-4"></a>Item
+4: Enforce Noninstantiability with a Private Constructor</h3>
+<h4 id="summary-3">Summary</h4>
+<p>Some classes, such as utility classes, are designed to be used
+statically and should not be instantiated. To enforce
+noninstantiability, you can use a private constructor.</p>
+<h4 id="example">Example</h4>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> UtilityClass <span class="op">{</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Suppress default constructor for noninstantiability</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="fu">UtilityClass</span><span class="op">()</span> <span class="op">{</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">throw</span> <span class="kw">new</span> <span class="bu">AssertionError</span><span class="op">();</span></span>
@@ -714,47 +489,32 @@
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">utilityMethod</span><span class="op">()</span> <span class="op">{</span></span>
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>        <span class="bu">System</span><span class="op">.</span><span class="fu">out</span><span class="op">.</span><span class="fu">println</span><span class="op">(</span><span class="st">&quot;Utility method...&quot;</span><span class="op">);</span></span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
-    </div>
-    <p>
-      In this example, the private constructor ensures that the class cannot be
-      instantiated from outside. The AssertionError thrown in the constructor
-      makes it clear that instantiation is not intended.
-    </p>
-    <h4 id="benefits-2">Benefits</h4>
-    <p>
-      Using a private constructor to enforce noninstantiability provides several
-      benefits, including:
-    </p>
-    <ul>
-      <li>
-        <strong>Clear intent:</strong> The private constructor clearly
-        communicates that the class is not intended to be instantiated.
-      </li>
-      <li>
-        <strong>Prevents instantiation:</strong> The private constructor
-        prevents accidental instantiation of the class.
-      </li>
-    </ul>
-    <h4 id="best-practices">Best Practices</h4>
-    <p>
-      When enforcing noninstantiability, consider the following best practices:
-    </p>
-    <ul>
-      <li>
-        <strong>Make the constructor private:</strong> Ensure that the
-        constructor is private to prevent instantiation.
-      </li>
-      <li>
-        <strong>Throw an AssertionError:</strong> Throwing an AssertionError in
-        the constructor makes it clear that instantiation is not intended.
-      </li>
-    </ul>
-    <h4 id="kotlin-implementation-3">Kotlin Implementation</h4>
-    <div class="sourceCode" id="cb10">
-      <pre
-        class="sourceCode kotlin"
-      ><code class="sourceCode kotlin"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> UtilityClass <span class="kw">private</span> <span class="kw">constructor</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>In this example, the private constructor ensures that the class
+cannot be instantiated from outside. The AssertionError thrown in the
+constructor makes it clear that instantiation is not intended.</p>
+<h4 id="benefits-2">Benefits</h4>
+<p>Using a private constructor to enforce noninstantiability provides
+several benefits, including:</p>
+<ul>
+<li><strong>Clear intent:</strong> The private constructor clearly
+communicates that the class is not intended to be instantiated.</li>
+<li><strong>Prevents instantiation:</strong> The private constructor
+prevents accidental instantiation of the class.</li>
+</ul>
+<h4 id="best-practices">Best Practices</h4>
+<p>When enforcing noninstantiability, consider the following best
+practices:</p>
+<ul>
+<li><strong>Make the constructor private:</strong> Ensure that the
+constructor is private to prevent instantiation.</li>
+<li><strong>Throw an AssertionError:</strong> Throwing an AssertionError
+in the constructor makes it clear that instantiation is not
+intended.</li>
+</ul>
+<h4 id="kotlin-implementation-3">Kotlin Implementation</h4>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> UtilityClass <span class="kw">private</span> <span class="kw">constructor</span><span class="op">()</span> <span class="op">{</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">companion</span> <span class="kw">object</span> <span class="op">{</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">fun</span> <span class="fu">utilityMethod</span><span class="op">()</span> <span class="op">{</span></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>            println<span class="op">(</span><span class="st">&quot;Utility method...&quot;</span><span class="op">)</span></span>
@@ -768,38 +528,30 @@
 <span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">fun</span> <span class="fu">utilityMethod</span><span class="op">()</span> <span class="op">{</span></span>
 <span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>        println<span class="op">(</span><span class="st">&quot;Utility method...&quot;</span><span class="op">)</span></span>
 <span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
-    </div>
-    <p>
-      In Kotlin, you can enforce noninstantiability of a class either by
-      declaring a private constructor or by using an object declaration. A
-      private constructor restricts external code from creating instances of the
-      class, which is useful for utility classes or any class that should not be
-      instantiated. This approach explicitly indicates the intent that
-      instantiation is disallowed. On the other hand, an object declaration
-      defines a singleton class at the language level, guaranteeing a single
-      instance without allowing any constructor calls. This is the preferred
-      idiomatic way in Kotlin to enforce a single instance while preventing any
-      instantiation. Both approaches convey clear intent and ensure controlled
-      access to the class instances, with the object declaration offering
-      built-in thread safety and simpler syntax.
-    </p>
-    <h3 id="item-5-prefer-dependency-injection-to-hardwiring-resources">
-      <a id="item-5"></a>Item 5: Prefer Dependency Injection to Hardwiring
-      Resources
-    </h3>
-    <h4 id="summary-4">Summary</h4>
-    <p>
-      Dependency injection is a design pattern that allows components to be
-      loosely coupled, making it easier to test, maintain, and extend the
-      system. Instead of hardwiring resources, prefer dependency injection to
-      provide dependencies to a class.
-    </p>
-    <h4 id="hardwiring-resources">Hardwiring Resources</h4>
-    <div class="sourceCode" id="cb11">
-      <pre
-        class="sourceCode java"
-      ><code class="sourceCode java"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> MerriamWebster <span class="kw">implements</span> <span class="bu">Dictionary</span> <span class="op">{</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>In Kotlin, you can enforce noninstantiability of a class either by
+declaring a private constructor or by using an object declaration. A
+private constructor restricts external code from creating instances of
+the class, which is useful for utility classes or any class that should
+not be instantiated. This approach explicitly indicates the intent that
+instantiation is disallowed. On the other hand, an object declaration
+defines a singleton class at the language level, guaranteeing a single
+instance without allowing any constructor calls. This is the preferred
+idiomatic way in Kotlin to enforce a single instance while preventing
+any instantiation. Both approaches convey clear intent and ensure
+controlled access to the class instances, with the object declaration
+offering built-in thread safety and simpler syntax.</p>
+<h3
+id="item-5-prefer-dependency-injection-to-hardwiring-resources"><a id="item-5"></a>Item
+5: Prefer Dependency Injection to Hardwiring Resources</h3>
+<h4 id="summary-4">Summary</h4>
+<p>Dependency injection is a design pattern that allows components to be
+loosely coupled, making it easier to test, maintain, and extend the
+system. Instead of hardwiring resources, prefer dependency injection to
+provide dependencies to a class.</p>
+<h4 id="hardwiring-resources">Hardwiring Resources</h4>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> MerriamWebster <span class="kw">implements</span> <span class="bu">Dictionary</span> <span class="op">{</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">@Override</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">define</span><span class="op">(</span><span class="bu">String</span> word<span class="op">)</span> <span class="op">{</span></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>        <span class="bu">System</span><span class="op">.</span><span class="fu">out</span><span class="op">.</span><span class="fu">println</span><span class="op">(</span><span class="st">&quot;Defining &quot;</span> <span class="op">+</span> word <span class="op">+</span> <span class="st">&quot;...&quot;</span><span class="op">);</span></span>
@@ -816,18 +568,13 @@
 <span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">lookup</span><span class="op">(</span><span class="bu">String</span> word<span class="op">)</span> <span class="op">{</span></span>
 <span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>        dictionary<span class="op">.</span><span class="fu">define</span><span class="op">(</span>word<span class="op">);</span></span>
 <span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
-    </div>
-    <p>
-      In this example, the Lexicon class is tightly coupled to the
-      MerriamWebster dictionary. This makes it difficult to test or use the
-      Lexicon class with a different dictionary.
-    </p>
-    <h4 id="dependency-injection">Dependency Injection</h4>
-    <div class="sourceCode" id="cb12">
-      <pre
-        class="sourceCode java"
-      ><code class="sourceCode java"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">interface</span> <span class="bu">Dictionary</span> <span class="op">{</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>In this example, the Lexicon class is tightly coupled to the
+MerriamWebster dictionary. This makes it difficult to test or use the
+Lexicon class with a different dictionary.</p>
+<h4 id="dependency-injection">Dependency Injection</h4>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">interface</span> <span class="bu">Dictionary</span> <span class="op">{</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">void</span> <span class="fu">define</span><span class="op">(</span><span class="bu">String</span> word<span class="op">);</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -857,48 +604,33 @@
 <span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>        Lexicon lexicon <span class="op">=</span> <span class="kw">new</span> <span class="fu">Lexicon</span><span class="op">(</span>dictionary<span class="op">);</span></span>
 <span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>        lexicon<span class="op">.</span><span class="fu">lookup</span><span class="op">(</span><span class="st">&quot;Hello&quot;</span><span class="op">);</span></span>
 <span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
-    </div>
-    <p>
-      In this example, the Lexicon class is decoupled from the specific
-      dictionary implementation. Instead, it depends on the Dictionary
-      interface, which can be implemented by different dictionaries.
-    </p>
-    <h4 id="benefits-3">Benefits</h4>
-    <p>Dependency injection provides several benefits, including:</p>
-    <ul>
-      <li>
-        <strong>Loose coupling:</strong> Components are decoupled, making it
-        easier to test, maintain, and extend the system.
-      </li>
-      <li>
-        <strong>Testability:</strong> Components can be tested in isolation
-        using mock dependencies.
-      </li>
-      <li>
-        <strong>Flexibility:</strong> Components can be used with different
-        dependencies, making it easier to adapt to changing requirements.
-      </li>
-    </ul>
-    <h4 id="best-practices-1">Best Practices</h4>
-    <p>
-      When using dependency injection, consider the following best practices:
-    </p>
-    <ul>
-      <li>
-        <strong>Use interfaces:</strong> Define interfaces for dependencies to
-        decouple components from specific implementations.
-      </li>
-      <li>
-        <strong>Use constructor injection:</strong> Inject dependencies through
-        constructors to ensure that components are properly initialized.
-      </li>
-    </ul>
-    <h4 id="kotlin-implementation-4">Kotlin Implementation</h4>
-    <div class="sourceCode" id="cb13">
-      <pre
-        class="sourceCode kotlin"
-      ><code class="sourceCode kotlin"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">interface</span> Dictionary <span class="op">{</span></span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>In this example, the Lexicon class is decoupled from the specific
+dictionary implementation. Instead, it depends on the Dictionary
+interface, which can be implemented by different dictionaries.</p>
+<h4 id="benefits-3">Benefits</h4>
+<p>Dependency injection provides several benefits, including:</p>
+<ul>
+<li><strong>Loose coupling:</strong> Components are decoupled, making it
+easier to test, maintain, and extend the system.</li>
+<li><strong>Testability:</strong> Components can be tested in isolation
+using mock dependencies.</li>
+<li><strong>Flexibility:</strong> Components can be used with different
+dependencies, making it easier to adapt to changing requirements.</li>
+</ul>
+<h4 id="best-practices-1">Best Practices</h4>
+<p>When using dependency injection, consider the following best
+practices:</p>
+<ul>
+<li><strong>Use interfaces:</strong> Define interfaces for dependencies
+to decouple components from specific implementations.</li>
+<li><strong>Use constructor injection:</strong> Inject dependencies
+through constructors to ensure that components are properly
+initialized.</li>
+</ul>
+<h4 id="kotlin-implementation-4">Kotlin Implementation</h4>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">interface</span> Dictionary <span class="op">{</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">fun</span> <span class="fu">define</span><span class="op">(</span><span class="va">word</span><span class="op">:</span> <span class="dt">String</span><span class="op">)</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -919,12 +651,12 @@
 <span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> <span class="va">dictionary</span><span class="op">:</span> Dictionary <span class="op">=</span> MerriamWebster<span class="op">()</span></span>
 <span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> <span class="va">lexicon</span> <span class="op">=</span> Lexicon<span class="op">(</span>dictionary<span class="op">)</span></span>
 <span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>    lexicon<span class="op">.</span>lookup<span class="op">(</span><span class="st">&quot;Hello&quot;</span><span class="op">)</span></span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre>
-    </div>
-    <p>
-      In Kotlin, you can use dependency injection in a similar way to Java. By
-      preferring dependency injection to hardwiring resources, you can write
-      more flexible, testable, and maintainable code.
-    </p>
-  </body>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>In Kotlin, you can use dependency injection in a similar way to Java.
+By preferring dependency injection to hardwiring resources, you can
+write more flexible, testable, and maintainable code.</p>
+<h3 id="next-up">Next Up</h3>
+<p>In our next post, we will cover Items 6-9 of Chapter-2. Stay
+tuned!</p>
+</body>
 </html>

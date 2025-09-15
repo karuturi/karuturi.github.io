@@ -369,3 +369,6 @@ fun main() {
 ```
 In Kotlin, you can use dependency injection in a similar way to Java.
 By preferring dependency injection to hardwiring resources, you can write more flexible, testable, and maintainable code.
+
+### Next Up
+In our next post, we will cover Items 6-9 of Chapter-2. Stay tuned!
