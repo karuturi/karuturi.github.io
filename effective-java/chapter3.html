@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>chapter3</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h2 id="introduction">Introduction</h2>
+<p>Welcome back to our “Effective Java” blog series! In this chapter,
+we’re moving on to a critical part of object-oriented programming:
+understanding and correctly implementing the methods inherited from
+<code>java.lang.Object</code>. While these methods may seem
+straightforward, a flawed implementation can lead to subtle and
+hard-to-find bugs. As always, we’ll see how Kotlin’s modern design
+patterns can help us avoid these pitfalls from the start.</p>
+<h2
+id="chapter-3-chapter-3---methods-common-to-all-objects-items-10-14">Chapter
+3: Chapter 3 - Methods Common to All Objects (Items 10-14)</h2>
+<ul>
+<li><a href="#item-10">Item 10: Override equals() when you need
+value-based equality</a></li>
+<li><a href="#item-11">Item 11: Always override hashCode() when you
+override equals()</a></li>
+<li><a href="#item-12">Item 12: Always override toString() for better
+debugging</a></li>
+<li><a href="#item-13">Item 13: Avoid clone() and use copy constructors
+or the copy() method in Kotlin</a></li>
+<li><a href="#item-14">Item 14: Implement Comparable to define a natural
+order</a></li>
+</ul>
+<h3
+id="item-10-override-equals-when-you-need-a-value-based-equality"><a id="item-10"></a>
+Item 10: Override equals() when you need a value-based equality</h3>
+<h4 id="summary">Summary</h4>
+<p>The <code>equals()</code> method is used to determine if two objects
+are logically equal. The default implementation in <code>Object</code>
+simply checks for reference equality (<code>this == obj</code>). You
+must override it when you want two distinct objects to be considered
+equal if their data is the same. However, a correct implementation must
+adhere to a strict contract.</p>
+<h4 id="the-equals-contract">The equals() Contract</h4>
+<ul>
+<li><strong>Reflexive:</strong> <code>x.equals(x)</code> must be
+true.</li>
+<li><strong>Symmetric:</strong> If <code>x.equals(y)</code> is true,
+then <code>y.equals(x)</code> must be true.</li>
+<li><strong>Transitive:</strong> If <code>x.equals(y)</code> is true and
+<code>y.equals(z)</code> is true, then <code>x.equals(z)</code> must be
+true.</li>
+<li><strong>Consistent:</strong> Multiple calls to
+<code>x.equals(y)</code> return the same result, assuming the objects
+are not modified.</li>
+<li><strong>Non-null:</strong> <code>x.equals(null)</code> must be
+false.</li>
+</ul>
+<h4 id="java">Java</h4>
+<p>A manual implementation in Java is verbose and requires careful
+attention to detail.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="im">java</span><span class="op">.</span><span class="im">util</span><span class="op">.</span><span class="im">Objects</span><span class="op">;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">final</span> <span class="kw">class</span> User <span class="op">{</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">final</span> <span class="bu">String</span> name<span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">final</span> <span class="bu">String</span> email<span class="op">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">final</span> <span class="bu">String</span> phoneNumber<span class="op">;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="fu">User</span><span class="op">(</span><span class="bu">String</span> name<span class="op">,</span> <span class="bu">String</span> email<span class="op">,</span> <span class="bu">String</span> phoneNumber<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        <span class="kw">this</span><span class="op">.</span><span class="fu">name</span> <span class="op">=</span> name<span class="op">;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        <span class="kw">this</span><span class="op">.</span><span class="fu">email</span> <span class="op">=</span> email<span class="op">;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>        <span class="kw">this</span><span class="op">.</span><span class="fu">phoneNumber</span> <span class="op">=</span> phoneNumber<span class="op">;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">@Override</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">boolean</span> <span class="fu">equals</span><span class="op">(</span><span class="bu">Object</span> o<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span><span class="kw">this</span> <span class="op">==</span> o<span class="op">)</span> <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>o <span class="op">==</span> <span class="kw">null</span> <span class="op">||</span> <span class="fu">getClass</span><span class="op">()</span> <span class="op">!=</span> o<span class="op">.</span><span class="fu">getClass</span><span class="op">())</span> <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        User user <span class="op">=</span> <span class="op">(</span>User<span class="op">)</span> o<span class="op">;</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> Objects<span class="op">.</span><span class="fu">equals</span><span class="op">(</span>name<span class="op">,</span> user<span class="op">.</span><span class="fu">name</span><span class="op">)</span> <span class="op">&amp;&amp;</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>               Objects<span class="op">.</span><span class="fu">equals</span><span class="op">(</span>email<span class="op">,</span> user<span class="op">.</span><span class="fu">email</span><span class="op">)</span> <span class="op">&amp;&amp;</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>               Objects<span class="op">.</span><span class="fu">equals</span><span class="op">(</span>phoneNumber<span class="op">,</span> user<span class="op">.</span><span class="fu">phoneNumber</span><span class="op">);</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h4 id="kotlin-data-class">Kotlin (Data Class)</h4>
+<p>This is where Kotlin’s data class shines. A data class automatically
+generates <code>equals()</code>, <code>hashCode()</code>, and
+<code>toString()</code> methods based on its primary constructor
+properties. This is the idiomatic way to handle value-based equality in
+Kotlin.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="kw">class</span> User<span class="op">(</span><span class="kw">val</span> <span class="va">name</span><span class="op">:</span> <span class="dt">String</span><span class="op">,</span> <span class="kw">val</span> <span class="va">email</span><span class="op">:</span> <span class="dt">String</span><span class="op">,</span> <span class="kw">val</span> <span class="va">phoneNumber</span><span class="op">:</span> <span class="dt">String</span><span class="op">)</span></span></code></pre></div>
+<p>This single line of code provides a robust and correct
+<code>equals()</code> implementation.</p>
+<h4 id="kotlin-non-data-class">Kotlin (Non-Data Class)</h4>
+<p>For a regular class, you have to manually override
+<code>equals()</code>, just like in Java. It’s a bit more verbose, but
+gives you more control.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> User<span class="op">(</span><span class="kw">val</span> <span class="va">name</span><span class="op">:</span> <span class="dt">String</span><span class="op">,</span> <span class="kw">val</span> <span class="va">email</span><span class="op">:</span> <span class="dt">String</span><span class="op">,</span> <span class="kw">val</span> <span class="va">phoneNumber</span><span class="op">:</span> <span class="dt">String</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">override</span> <span class="kw">fun</span> <span class="fu">equals</span><span class="op">(</span><span class="va">other</span><span class="op">:</span> <span class="dt">Any</span><span class="op">?):</span> <span class="dt">Boolean</span> <span class="op">{</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span><span class="kw">this</span> <span class="op">===</span> other<span class="op">)</span> <span class="kw">return</span> <span class="kw">true</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>other <span class="op">!</span><span class="kw">is</span> User<span class="op">)</span> <span class="kw">return</span> <span class="kw">false</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">return</span> name <span class="op">==</span> other<span class="op">.</span>name <span class="op">&amp;&amp;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>               email <span class="op">==</span> other<span class="op">.</span>email <span class="op">&amp;&amp;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>               phoneNumber <span class="op">==</span> other<span class="op">.</span>phoneNumber</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p><strong>Summary:</strong> Only override <code>equals()</code> when
+you need value equality. For simple cases in Kotlin,
+<code>data class</code> provides the perfect, foolproof solution, but
+it’s important to know how to do it manually for more complex
+classes.</p>
+<h3
+id="item-11-always-override-hashcode-when-you-override-equals"><a id="item-11"></a>
+Item 11: Always Override hashCode() When You Override equals()</h3>
+<h4 id="summary-1">Summary</h4>
+<p>The <code>hashCode()</code> method must always be overridden if
+<code>equals()</code> is overridden. The <code>Object</code> contract
+specifies that two objects that are equal according to
+<code>equals()</code> must have the same hash code. Failure to do so
+will break hash-based collections like <code>HashMap</code> and
+<code>HashSet</code>.</p>
+<h4 id="java-1">Java</h4>
+<p>A good <code>hashCode()</code> implementation in Java is a
+combination of a prime number and the hash codes of the object’s fields.
+The formula is: <code>result = 31 * result + c</code>. The
+<code>Objects.hash</code> utility is a convenient way to implement this
+in modern Java.</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="im">java</span><span class="op">.</span><span class="im">util</span><span class="op">.</span><span class="im">Objects</span><span class="op">;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">final</span> <span class="kw">class</span> User <span class="op">{</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">// ...</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">@Override</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">int</span> <span class="fu">hashCode</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> Objects<span class="op">.</span><span class="fu">hash</span><span class="op">(</span>name<span class="op">,</span> email<span class="op">,</span> phoneNumber<span class="op">);</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h4 id="kotlin-data-class-1">Kotlin (Data Class)</h4>
+<p>Again, the <code>data class</code> simplifies this entirely. The
+<code>hashCode()</code> method is automatically generated and consistent
+with <code>equals()</code>, preventing a common source of bugs.</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">// The hashCode() is automatically generated and correct.</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="kw">class</span> User<span class="op">(</span><span class="kw">val</span> <span class="va">name</span><span class="op">:</span> <span class="dt">String</span><span class="op">,</span> <span class="kw">val</span> <span class="va">email</span><span class="op">:</span> <span class="dt">String</span><span class="op">,</span> <span class="kw">val</span> <span class="va">phoneNumber</span><span class="op">:</span> <span class="dt">String</span><span class="op">)</span></span></code></pre></div>
+<h4 id="kotlin-non-data-class-1">Kotlin (Non-Data Class)</h4>
+<p>For a regular class, you’ll need to manually implement
+<code>hashCode()</code> as well. It’s crucial that it’s consistent with
+your <code>equals()</code> implementation.</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> User<span class="op">(</span><span class="kw">val</span> <span class="va">name</span><span class="op">:</span> <span class="dt">String</span><span class="op">,</span> <span class="kw">val</span> <span class="va">email</span><span class="op">:</span> <span class="dt">String</span><span class="op">,</span> <span class="kw">val</span> <span class="va">phoneNumber</span><span class="op">:</span> <span class="dt">String</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">override</span> <span class="kw">fun</span> <span class="fu">hashCode</span><span class="op">():</span> <span class="dt">Int</span> <span class="op">{</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">var</span> <span class="va">result</span> <span class="op">=</span> name<span class="op">.</span>hashCode<span class="op">()</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        result <span class="op">=</span> <span class="dv">31</span> <span class="op">*</span> result <span class="op">+</span> email<span class="op">.</span>hashCode<span class="op">()</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        result <span class="op">=</span> <span class="dv">31</span> <span class="op">*</span> result <span class="op">+</span> phoneNumber<span class="op">.</span>hashCode<span class="op">()</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">return</span> result</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p><strong>Summary:</strong> The <code>equals()</code> and
+<code>hashCode()</code> methods are a pair. If you override one, you
+must override the other. In Kotlin, use a <code>data class</code> for
+this, or be diligent in your manual implementations.</p>
+<h3 id="item-12-always-override-tostring"><a id="item-12"></a> Item 12:
+Always Override toString()</h3>
+<h4 id="summary-2">Summary</h4>
+<p>While not as critical as <code>equals()</code> and
+<code>hashCode()</code>, a good <code>toString()</code> implementation
+is vital for debugging and logging. The default implementation from
+<code>Object</code> is not useful.</p>
+<h4 id="java-2">Java</h4>
+<p>A manual <code>toString()</code> implementation should be clear,
+concise, and provide all relevant information about the object’s
+state.</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">final</span> <span class="kw">class</span> User <span class="op">{</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">// ...</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">@Override</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="bu">String</span> <span class="fu">toString</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">&quot;User{&quot;</span> <span class="op">+</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>               <span class="st">&quot;name=&#39;&quot;</span> <span class="op">+</span> name <span class="op">+</span> <span class="ch">&#39;\&#39;&#39;</span> <span class="op">+</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>               <span class="st">&quot;, email=&#39;&quot;</span> <span class="op">+</span> email <span class="op">+</span> <span class="ch">&#39;\&#39;&#39;</span> <span class="op">+</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>               <span class="st">&quot;, phoneNumber=&#39;&quot;</span> <span class="op">+</span> phoneNumber <span class="op">+</span> <span class="ch">&#39;\&#39;&#39;</span> <span class="op">+</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>               <span class="ch">&#39;}&#39;</span><span class="op">;</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h4 id="kotlin-data-class-2">Kotlin (Data Class)</h4>
+<p>Kotlin’s <code>data class</code> also generates a useful
+<code>toString()</code> method for you, including all properties in the
+primary constructor.</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Automatically generates a readable toString() method.</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="kw">class</span> User<span class="op">(</span><span class="kw">val</span> <span class="va">name</span><span class="op">:</span> <span class="dt">String</span><span class="op">,</span> <span class="kw">val</span> <span class="va">email</span><span class="op">:</span> <span class="dt">String</span><span class="op">,</span> <span class="kw">val</span> <span class="va">phoneNumber</span><span class="op">:</span> <span class="dt">String</span><span class="op">)</span></span></code></pre></div>
+<h4 id="kotlin-non-data-class-2">Kotlin (Non-Data Class)</h4>
+<p>For a non-data class, you’ll need to manually override
+<code>toString()</code> to get a meaningful representation.</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> User<span class="op">(</span><span class="kw">val</span> <span class="va">name</span><span class="op">:</span> <span class="dt">String</span><span class="op">,</span> <span class="kw">val</span> <span class="va">email</span><span class="op">:</span> <span class="dt">String</span><span class="op">,</span> <span class="kw">val</span> <span class="va">phoneNumber</span><span class="op">:</span> <span class="dt">String</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">override</span> <span class="kw">fun</span> <span class="fu">toString</span><span class="op">():</span> <span class="dt">String</span> <span class="op">{</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">return</span> <span class="st">&quot;User(name=</span><span class="ss">$name</span><span class="st">, email=</span><span class="ss">$email</span><span class="st">, phoneNumber=</span><span class="ss">$phoneNumber</span><span class="st">)&quot;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p><strong>Summary:</strong> A useful <code>toString()</code> method is
+essential. When you create a class, always consider how its string
+representation can help you understand its state.</p>
+<h3 id="item-13-override-clone-judiciously"><a id="item-13"></a> Item
+13: Override clone() Judiciously</h3>
+<h4 id="summary-3">Summary</h4>
+<p>The <code>clone()</code> method is part of a complex and flawed
+framework. The <code>Cloneable</code> interface is a marker interface,
+and <code>Object.clone()</code> is a protected method that performs a
+shallow copy. This approach is brittle and can lead to bugs. For
+instance, if an object contains a mutable field, a shallow copy will
+lead to two objects sharing the same mutable state, which is almost
+never what you want.</p>
+<h4 id="java-3">Java</h4>
+<p>To correctly implement <code>clone()</code>, you must handle both the
+<code>Cloneable</code> marker interface and potential
+<code>CloneNotSupportedExceptions</code>. Even then, it’s often more
+trouble than it’s worth.</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">// A flawed clone() implementation in Java.</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> MyObject <span class="kw">implements</span> <span class="bu">Cloneable</span> <span class="op">{</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="bu">List</span><span class="op">&lt;</span><span class="bu">String</span><span class="op">&gt;</span> list<span class="op">;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">// ...</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">@Override</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> MyObject <span class="fu">clone</span><span class="op">()</span> <span class="kw">throws</span> <span class="bu">CloneNotSupportedException</span> <span class="op">{</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>        <span class="co">// This is a shallow copy! The cloned object shares the same list.</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="op">(</span>MyObject<span class="op">)</span> <span class="kw">super</span><span class="op">.</span><span class="fu">clone</span><span class="op">();</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>A better solution is to use a copy constructor or a copy factory,
+which is a safer and more readable pattern.</p>
+<h4 id="kotlin-data-class-3">Kotlin (Data Class)</h4>
+<p>Kotlin’s <code>data class</code> provides a <code>copy()</code>
+method that is a perfect example of this idiomatic approach. The
+<code>copy()</code> method creates a new instance with the same
+properties as the original, allowing you to optionally change specific
+fields. It handles the deep vs. shallow copy behavior exactly as you
+would expect.</p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="kw">class</span> MyObject<span class="op">(</span><span class="kw">val</span> <span class="va">name</span><span class="op">:</span> <span class="dt">String</span><span class="op">,</span> <span class="kw">val</span> <span class="va">list</span><span class="op">:</span> <span class="dt">MutableList</span>&lt;<span class="va">String</span>&gt;<span class="op">)</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">// Creating a deep copy using the copy() method.</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> original = MyObject<span class="op">(</span>&quot;<span class="va">A</span>&quot;<span class="op">,</span> <span class="va">mutableListOf</span>(&quot;1&quot;<span class="op">,</span> &quot;2&quot;<span class="op">)</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> copy = original.copy<span class="op">(</span><span class="va">list</span> <span class="op">=</span> ArrayList<span class="op">(</span>original<span class="op">.</span>list<span class="op">))</span></span></code></pre></div>
+<h4 id="kotlin-non-data-class-3">Kotlin (Non-Data Class)</h4>
+<p>Regular classes in Kotlin do not get an automatic <code>copy()</code>
+method. You’ll need to create one yourself, or a copy constructor, to
+provide this functionality.</p>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> MyObject<span class="op">(</span><span class="kw">val</span> <span class="va">name</span><span class="op">:</span> <span class="dt">String</span><span class="op">,</span> <span class="kw">val</span> <span class="va">list</span><span class="op">:</span> <span class="dt">MutableList</span>&lt;<span class="va">String</span>&gt;<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">fun</span> <span class="fu">copy</span><span class="op">(</span><span class="va">name</span><span class="op">:</span> <span class="dt">String</span> <span class="op">=</span> this<span class="op">.</span>name<span class="op">,</span> <span class="va">list</span><span class="op">:</span> <span class="dt">MutableList</span>&lt;<span class="va">String</span>&gt; <span class="op">=</span> this<span class="op">.</span>list<span class="op">):</span> <span class="dt">MyObject</span> <span class="op">{</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">return</span> MyObject<span class="op">(</span>name<span class="op">,</span> list<span class="op">)</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">// Creating a copy using our custom function.</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> <span class="va">original</span> <span class="op">=</span> MyObject<span class="op">(</span><span class="st">&quot;A&quot;</span><span class="op">,</span> mutableListOf<span class="op">(</span><span class="st">&quot;1&quot;</span><span class="op">,</span> <span class="st">&quot;2&quot;</span><span class="op">))</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> <span class="va">copy</span> <span class="op">=</span> original<span class="op">.</span>copy<span class="op">(</span>list <span class="op">=</span> ArrayList<span class="op">(</span>original<span class="op">.</span>list<span class="op">))</span></span></code></pre></div>
+<p><strong>Summary:</strong> Avoid the <code>clone()</code> method. Use
+a copy constructor or, better yet, the <code>copy()</code> method in a
+Kotlin <code>data class</code>. For non-data classes, create your own
+<code>copy()</code> function.</p>
+<h3 id="item-14-consider-implementing-comparable"><a id="item-14"></a>
+Item 14: Consider Implementing Comparable</h3>
+<h4 id="summary-4">Summary</h4>
+<p>The <code>Comparable</code> interface is used for natural ordering.
+It contains a single method, <code>compareTo()</code>, which compares
+the <code>this</code> object to another object. Correctly implementing
+<code>compareTo()</code> allows objects to be sorted and to work with
+collections like <code>TreeSet</code> and <code>TreeMap</code>.</p>
+<h4 id="java-java-21">Java (Java 21)</h4>
+<p>Modern Java provides a more concise way to implement
+<code>Comparable</code> using <code>Comparator.comparing</code> and
+<code>thenComparing</code>, which is much cleaner and less error-prone
+than manual comparisons.</p>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="im">java</span><span class="op">.</span><span class="im">util</span><span class="op">.</span><span class="im">Comparator</span><span class="op">;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">final</span> <span class="kw">class</span> User <span class="kw">implements</span> <span class="bu">Comparable</span><span class="op">&lt;</span>User<span class="op">&gt;</span> <span class="op">{</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">final</span> <span class="bu">String</span> name<span class="op">;</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">final</span> <span class="bu">String</span> email<span class="op">;</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">final</span> <span class="bu">String</span> phoneNumber<span class="op">;</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="fu">User</span><span class="op">(</span><span class="bu">String</span> name<span class="op">,</span> <span class="bu">String</span> email<span class="op">,</span> <span class="bu">String</span> phoneNumber<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>        <span class="kw">this</span><span class="op">.</span><span class="fu">name</span> <span class="op">=</span> name<span class="op">;</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>        <span class="kw">this</span><span class="op">.</span><span class="fu">email</span> <span class="op">=</span> email<span class="op">;</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>        <span class="kw">this</span><span class="op">.</span><span class="fu">phoneNumber</span> <span class="op">=</span> phoneNumber<span class="op">;</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="bu">Comparator</span><span class="op">&lt;</span>User<span class="op">&gt;</span> COMPARATOR <span class="op">=</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>        <span class="bu">Comparator</span><span class="op">.</span><span class="fu">comparing</span><span class="op">(</span>User<span class="op">::</span>getName<span class="op">)</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>                  <span class="op">.</span><span class="fu">thenComparing</span><span class="op">(</span>User<span class="op">::</span>getEmail<span class="op">)</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>                  <span class="op">.</span><span class="fu">thenComparing</span><span class="op">(</span>User<span class="op">::</span>getPhoneNumber<span class="op">);</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="bu">String</span> <span class="fu">getName</span><span class="op">()</span> <span class="op">{</span> <span class="cf">return</span> name<span class="op">;</span> <span class="op">}</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="bu">String</span> <span class="fu">getEmail</span><span class="op">()</span> <span class="op">{</span> <span class="cf">return</span> email<span class="op">;</span> <span class="op">}</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="bu">String</span> <span class="fu">getPhoneNumber</span><span class="op">()</span> <span class="op">{</span> <span class="cf">return</span> phoneNumber<span class="op">;</span> <span class="op">}</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">@Override</span></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">int</span> <span class="fu">compareTo</span><span class="op">(</span>User user<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> COMPARATOR<span class="op">.</span><span class="fu">compare</span><span class="op">(</span><span class="kw">this</span><span class="op">,</span> user<span class="op">);</span></span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h4 id="kotlin">Kotlin</h4>
+<p>For a regular class, you implement <code>Comparable</code> and
+override <code>compareTo()</code> in the same way. The
+<code>compareBy</code> function provides a more idiomatic and readable
+alternative to manual comparison logic.</p>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode kotlin"><code class="sourceCode kotlin"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> User<span class="op">(</span><span class="kw">val</span> <span class="va">name</span><span class="op">:</span> <span class="dt">String</span><span class="op">,</span> <span class="kw">val</span> <span class="va">email</span><span class="op">:</span> <span class="dt">String</span><span class="op">,</span> <span class="kw">val</span> <span class="va">phoneNumber</span><span class="op">:</span> <span class="dt">String</span><span class="op">)</span> <span class="op">:</span> <span class="dt">Comparable</span><span class="op">&lt;</span><span class="dt">User</span><span class="op">&gt;</span> <span class="op">{</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">override</span> <span class="kw">fun</span> <span class="fu">compareTo</span><span class="op">(</span><span class="va">other</span><span class="op">:</span> <span class="dt">User</span><span class="op">):</span> <span class="dt">Int</span> <span class="op">{</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">return</span> compareBy<span class="op">&lt;</span>User<span class="op">&gt;</span> <span class="op">{</span> it<span class="op">.</span>name <span class="op">}</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span>thenBy <span class="op">{</span> it<span class="op">.</span>email <span class="op">}</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span>thenBy <span class="op">{</span> it<span class="op">.</span>phoneNumber <span class="op">}</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span>compare<span class="op">(</span><span class="kw">this</span><span class="op">,</span> other<span class="op">)</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p><strong>Summary:</strong> Use the <code>Comparable</code> interface
+to define a natural order for your objects, but be sure to adhere to its
+strict contract.</p>
+<h2 id="wrap-up">Wrap-up</h2>
+<p>The methods inherited from <code>java.lang.Object</code> are
+foundational to the Java platform. By correctly implementing
+<code>equals()</code>, <code>hashCode()</code>, <code>toString()</code>,
+and <code>compareTo()</code>, you ensure your objects behave predictably
+and work correctly with the rest of the Java ecosystem. The lessons
+we’ve learned here are a perfect example of why Kotlin’s
+<code>data class</code> is such a powerful and effective tool, as it
+automates the implementation of these critical methods, helping you
+avoid common pitfalls.</p>
+<h3 id="next-up">Next Up</h3>
+<p>In our next post, we will begin exploring Chapter 4: Classes and
+Interfaces, and dive into how to design them for clarity and power. Stay
+tuned!</p>
+</body>
+</html>
